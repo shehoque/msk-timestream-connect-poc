@@ -49,8 +49,8 @@ public class TimeStreamSimpleWriter {
         dimensions.add(state);
         dimensions.add(version);
         Collection<MeasureValue> measureValues = new ArrayList<>();
-        MeasureValue memoryUtilMV = MeasureValue.builder().name("Mem_Util").value(String.valueOf(struct.getString("memUtil"))).type(MeasureValueType.DOUBLE).build();
-        MeasureValue cpuUtilMV = MeasureValue.builder().name("Cpu_Util").value(String.valueOf(struct.getString("cpuUtil"))).type(MeasureValueType.DOUBLE).build();
+        MeasureValue memoryUtilMV = MeasureValue.builder().name("Mem_Util").value(String.valueOf(struct.getFloat64("memUtil"))).type(MeasureValueType.DOUBLE).build();
+        MeasureValue cpuUtilMV = MeasureValue.builder().name("Cpu_Util").value(String.valueOf(struct.getFloat64("cpuUtl"))).type(MeasureValueType.DOUBLE).build();
         measureValues.add(memoryUtilMV);
         measureValues.add(cpuUtilMV);
         Record workspaceMV = Record.builder()
@@ -58,7 +58,7 @@ public class TimeStreamSimpleWriter {
                 .measureValueType(MeasureValueType.MULTI)
                 .measureName("Metrics")
                 .measureValues(measureValues)
-                .time(String.valueOf(struct.getString("eventTimestamp"))).timeUnit(TimeUnit.SECONDS).build();
+                .time(String.valueOf(struct.getInt64("eventTimestamp"))).timeUnit(TimeUnit.SECONDS).build();
 
         records.add(workspaceMV);
 
